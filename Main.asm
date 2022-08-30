@@ -35,6 +35,8 @@
 	INCLUDE	"ADC.asm"
 	INCLUDE	"Displays.asm"
 	
+	;;;;;;;;;;;;;;;;;;;;;;;;; GENERAL SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
 SETUP	NOP
 	BANKSEL	TRISA
 	;MOVLW	B'01101010'
@@ -52,8 +54,12 @@ SETUP	NOP
 	
 	BANKSEL PORTA	; Return to Bank0 (Bank where PORTA reg is located)
 	
+	;;;;;;;;;;;;;;;;;;;;;;;;;;; ADC SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
 	MOVLW	B'11000001'
 	MOVWF	ADCON0
+	
+	;;;;;;;;;;;;;;;;;;;;;;;;;; PORTS CLEAR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	CLRF    PORTC	; Clear Portc
 	CLRF    PORTD	; Clear Portd
@@ -73,10 +79,14 @@ SETUP	NOP
 	BSF	INTCON,PEIE
 	BSF	INTCON,GIE
 	
-	;;;;;;;;;;;;;;;;;;;;; VARIABLE INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;
+	;;;;;;;;;;;;;;;;;;;;; VARIABLES INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;
 	
 	MOVLW	.1
 	MOVWF	OPER_MODE
+	
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;; END OF SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+	GOTO	START
 	
 	
 ;	MOVLW	.2
@@ -94,6 +104,12 @@ SETUP	NOP
 	
 	
 START
+	MOVLW	.4
+	CALL	ADC_GET
+	CALL	VOLT_TIME_CONV
+	
+	MOVFW	TIME
+	MOVWF	PORTC
 	
 	
 	
@@ -102,6 +118,8 @@ START
 	
 	GOTO	START
 	
+	
+	
 TMR1_LD	MOVLW	0X0B
 	MOVWF	TMR1H
 	MOVLW	0XDB
@@ -109,6 +127,9 @@ TMR1_LD	MOVLW	0X0B
 	BSF	T1CON,TMR1ON
 	RETURN
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ISR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
 IRQ	MOVWF	BACKUP_W	; w and status backup
 	MOVFW	STATUS

@@ -1,12 +1,12 @@
 MPLINK 5.09, LINKER
-Linker Map File - Created Tue Aug 30 19:01:46 2022
+Linker Map File - Created Tue Aug 30 20:32:00 2022
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
                    .org_0       code   0x000000    program   0x000002
                    .cinit    romdata   0x000001    program   0x000004
-                   .org_1       code   0x000004    program   0x00012c
+                   .org_1       code   0x000004    program   0x000156
 .config_2007_BUILD/DEFAULT/PRODUCTION/MAIN.O       code   0x002007    program   0x000002
 
 
@@ -15,22 +15,22 @@ Linker Map File - Created Tue Aug 30 19:01:46 2022
                                Start         End      
                            ---------   ---------      
                             0x000000    0x000002      
-                            0x000004    0x000099      
+                            0x000004    0x0000ae      
                             0x002007    0x002007      
-            154 out of 8454 program addresses used, program memory utilization is 1%
+            175 out of 8454 program addresses used, program memory utilization is 2%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-               ADC_CONVER   0x000046    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
+                  ADC_GET   0x000046    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
                 DELAY_100   0x000016    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                  DELAY_20   0x00002f    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                   DELAY_5   0x00003a    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                  DELAY_50   0x000024    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                 DELAY_500   0x000005    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
-                  DISPLAY   0x000064    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Displays.asm
+                  DISPLAY   0x000073    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Displays.asm
                   DLoop10   0x000012    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                   DLoop11   0x000013    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                   DLoop12   0x000014    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
@@ -43,7 +43,8 @@ Linker Map File - Created Tue Aug 30 19:01:46 2022
                    DLoop8   0x00000c    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                    DLoop9   0x000011    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                    Dloop1   0x000043    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
-                      IRQ   0x00008c    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
+              FIXING_VOLT   0x00006e    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
+                      IRQ   0x0000a1    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
                    PLoop1   0x00003c    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                   PLoop13   0x000026    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                   PLoop14   0x000028    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
@@ -54,11 +55,12 @@ Linker Map File - Created Tue Aug 30 19:01:46 2022
                    PLoop4   0x00001a    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                    PLoop5   0x000007    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                    PLoop6   0x000009    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
-                      RFI   0x000095    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
-                    SETUP   0x00006a    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
-                    START   0x000085    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
-                    TABLE   0x000066    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Displays.asm
-                  TMR1_LD   0x000086    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
+                      RFI   0x0000aa    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
+                    SETUP   0x000079    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
+                    START   0x000095    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
+                    TABLE   0x000075    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Displays.asm
+                  TMR1_LD   0x00009b    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
+           VOLT_TIME_CONV   0x000064    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
              _.org_1_0056   0x000056    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
              _.org_1_0059   0x000059    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
 
@@ -94,15 +96,17 @@ Linker Map File - Created Tue Aug 30 19:01:46 2022
                    PLoop2   0x00003e    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                    Dloop1   0x000043    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
                    DLoop2   0x000044    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Tempos.asm
-               ADC_CONVER   0x000046    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
+                  ADC_GET   0x000046    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
              _.org_1_0056   0x000056    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
              _.org_1_0059   0x000059    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
-                  DISPLAY   0x000064    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Displays.asm
-                    TABLE   0x000066    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Displays.asm
-                    SETUP   0x00006a    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
-                    START   0x000085    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
-                  TMR1_LD   0x000086    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
-                      IRQ   0x00008c    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
-                      RFI   0x000095    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
+           VOLT_TIME_CONV   0x000064    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
+              FIXING_VOLT   0x00006e    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.asm
+                  DISPLAY   0x000073    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Displays.asm
+                    TABLE   0x000075    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Displays.asm
+                    SETUP   0x000079    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
+                    START   0x000095    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
+                  TMR1_LD   0x00009b    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
+                      IRQ   0x0000a1    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
+                      RFI   0x0000aa    program     static D:\Armando\OneDrive\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\Main.asm
 
 

@@ -8,16 +8,18 @@
 	SHIFT_REG
 	VOLTAGE_L
 	VOLTAGE_H
+	MID_RAN_V
 	ADC_CONT
 	HUNDREDS
 	TENS
 	UNIT
+	TIME
 	ENDC
 	
 
 ; ============================> ADC CONVERSION <============================
 
-ADC_CONVER:	MOVWF	SHIFT_REG	; Saves w value into SHIFT_REG
+ADC_GET:	MOVWF	SHIFT_REG	; Saves w value into SHIFT_REG
 		BCF	STATUS,C	; Clear Carry before rotation
 		RLF	SHIFT_REG,F	; 1 Time left rotation
 		BCF	STATUS,C	; Clear Carry before rotation
@@ -50,4 +52,33 @@ ADC_CONVER:	MOVWF	SHIFT_REG	; Saves w value into SHIFT_REG
 		MOVFW	ADRESH
 		MOVWF	VOLTAGE_H
 		RETURN
+		
+
+VOLT_TIME_CONV:	CLRF	MID_RAN_V
+		CLRF	TIME
+		
+		MOVLW	.255
+		SUBWF	VOLTAGE_L,W
+		BTFSC	STATUS,Z
+		INCF	TIME,F
+		
+		
+		MOVLW	.125
+		SUBWF	VOLTAGE_L,W
+		BTFSC	STATUS,C
+		INCF	TIME,F
+		
+FIXING_VOLT:	BCF	STATUS,C
+		RLF	VOLTAGE_H,W ; Multiply by 2
+		ADDWF	TIME,F	; Adds medium range voltage if do
+		
+		MOVFW	TIME
+		RETURN
+		
+		
+		
+		
+
 	
+		
+		
