@@ -14,18 +14,28 @@
  __CONFIG _FOSC_XT & _WDTE_OFF & _PWRTE_OFF & _BOREN_OFF & _LVP_OFF & _CPD_OFF & _WRT_OFF & _CP_OFF
 	
 	
+	CBLOCK	0X20
+	BACKUP_W
+	BACKUP_STA
+	TMR1_TICK
+	OPER_MODE
+	ENDC
+	
 	
 	RADIX   DEC
 	
 	
 	ORG	0X00
-	GOTO	START
+	GOTO	SETUP
+	
+	ORG	0X04
+	GOTO	IRQ
 	
 	INCLUDE	"Tempos.asm"
 	INCLUDE	"ADC.asm"
 	INCLUDE	"Displays.asm"
 	
-START	NOP
+SETUP	NOP
 	BANKSEL	TRISA
 	;MOVLW	B'01101010'
 	;MOVWF	OSCCON
@@ -38,6 +48,8 @@ START	NOP
 	CLRF	TRISD
 	CLRF	TRISE
 	
+	BSF	PIE1,TMR1IE
+	
 	BANKSEL PORTA	; Return to Bank0 (Bank where PORTA reg is located)
 	
 	MOVLW	B'11000001'
@@ -47,24 +59,80 @@ START	NOP
 	CLRF    PORTD	; Clear Portd
 	CLRF    PORTE	; Clear Porte
 	
-	MOVLW	.2
-	CALL	DISPLAY
-	MOVWF	PORTD
+	;;;;;;;;;;;;;;;;;;;;;;;;;;; TMR1 SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
-	MOVLW	.4
-	CALL	ADC_CONVER
-	MOVWF	PORTC
-	GOTO	$-3
+	MOVLW	.2
+	MOVWF	TMR1_TICK
+	
+	MOVLW	B'00110000'
+	MOVWF	T1CON
+	
+	CALL	TMR1_LD
+	
+	; TMR1 INTERRUPT SETUP
+	BSF	INTCON,PEIE
+	BSF	INTCON,GIE
+	
+	;;;;;;;;;;;;;;;;;;;;; VARIABLE INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;;
+	
+	MOVLW	.1
+	MOVWF	OPER_MODE
+	
+	
+;	MOVLW	.2
+;	CALL	DISPLAY
+;	
+;	MOVLW	.4
+;	CALL	ADC_CONVER
+;	MOVWF	PORTC
+;	GOTO	$-3
 	
 ;	MOVLW	.255
 ;	XORWF	PORTC,F
 ;	CALL	DELAY_500
 ;	GOTO	$-3
 	
-	END
+	
+START
 	
 	
+	
+	
+	
+	
+	GOTO	START
+	
+TMR1_LD	MOVLW	0X0B
+	MOVWF	TMR1H
+	MOVLW	0XDB
+	MOVWF	TMR1L
+	BSF	T1CON,TMR1ON
+	RETURN
 
 	
+IRQ	MOVWF	BACKUP_W	; w and status backup
+	MOVFW	STATUS
+	MOVWF	BACKUP_STA
+	
+	
+	DECFSZ	TMR1_TICK,F	; Ask if tick = 2
+	GOTO	RFI		; If not, return from interrupt
+	
+	MOVLW	.2		; If afirmative...
+	MOVWF	TMR1_TICK	; Tick Reload
+	
+	MOVLW	.255
+	XORWF	PORTE,F
+	
+	
+RFI	BCF	PIR1,TMR1IF
+	
+	MOVFW	BACKUP_STA	; w and status restore
+	MOVWF	STATUS
+	MOVFW	BACKUP_W
+	RETFIE
+	
+	
+	END
 	
 	
