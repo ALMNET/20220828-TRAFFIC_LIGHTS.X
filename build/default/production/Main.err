@@ -1,7 +1,8 @@
 Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\ADC.ASM 48 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 45 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 47 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 49 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 50 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 51 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 53 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 57 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 59 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 65 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 66 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 68 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 70 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ARMANDO\ONEDRIVE\PROJECTS\MPLABX\20220828-TRAFFIC_LIGHTS.X\MAIN.ASM 103 : Register in operand not in bank 0.  Ensure that bank bits are correct.

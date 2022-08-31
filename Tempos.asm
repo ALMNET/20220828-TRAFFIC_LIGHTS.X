@@ -8,6 +8,15 @@
 		PDel2
 
 		ENDC
+		
+; ============================> TIMER1 VALUES LOAD <============================
+		
+TMR1_LD		MOVLW	0X0B
+		MOVWF	TMR1H
+		MOVLW	0XDB
+		MOVWF	TMR1L
+		BSF	T1CON,TMR1ON
+		RETURN
 
 ; ============> 500 mS <=============
 

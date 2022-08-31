@@ -9,31 +9,43 @@
 ; ===============================> CONFIG WORDS <===============================
 ; ==============================================================================
 	
-; CONFIG
-; __config 0xFF39
+; CONFIG Fuses for 4 MHz XR, No WDT, No Power on Timer, No Low Voltage Programming
+;	 No code read protection and  No code Write protection
  __CONFIG _FOSC_XT & _WDTE_OFF & _PWRTE_OFF & _BOREN_OFF & _LVP_OFF & _CPD_OFF & _WRT_OFF & _CP_OFF
-	
-	
+ 
+
 	CBLOCK	0X20
-	BACKUP_W
-	BACKUP_STA
-	TMR1_TICK
-	OPER_MODE
+	BACKUP_W	; W backup register for interrupt purposes
+	BACKUP_STA	; Status backup register for interrupt purposes
+	TMR1_TICK	; 500 ms Tick for TMR1 (2 Ticks mean 1 seg)
+	OPER_MODE	; Single, Double or Emergency (Stop)
+	TIME1		; Time 1 for single operation
+	TIME2		; Time 2 for single operation
+	TIME3		; Time 3 for single operation
+	TIME4		; Time 4 for single operation
+	TIME1_D		; Time 1 for Double Oper (The greater bet TIME1 and TIME3)
+	TIME2_D		; Time 2 for Double Oper (The greater bet TIME2 and TIME4)
+	TOTAL_TIME	; Result of TIME1 + TIME2 + TIME3 + TIME4
 	ENDC
+	
+#DEFINE	OP_SING	.1	; Just operation mode definitions
+#DEFINE	OP_DOUB	.2
+#DEFINE	OP_EMER	.3
+	
 	
 	
 	RADIX   DEC
 	
 	
-	ORG	0X00
+	ORG	0X00	; Reset Vector
 	GOTO	SETUP
 	
-	ORG	0X04
+	ORG	0X04	; Interrupt Vector
 	GOTO	IRQ
 	
-	INCLUDE	"Tempos.asm"
-	INCLUDE	"ADC.asm"
-	INCLUDE	"Displays.asm"
+	INCLUDE	"Tempos.asm"	; General delay file (Library)
+	INCLUDE	"ADC.asm"	; ADC routines library
+	INCLUDE	"Displays.asm"	; Simple 7 segment table library for 1, 2 and E
 	
 	;;;;;;;;;;;;;;;;;;;;;;;;; GENERAL SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
@@ -46,11 +58,21 @@ SETUP	NOP
 	MOVLW	B'00111111'
 	MOVWF   TRISA	; RA0 as Input
 	
-	CLRF	TRISC
-	CLRF	TRISD
-	CLRF	TRISE
+	MOVLW	.1
+	MOVWF	PORTB	; RB0 as Input for Stop Button
+	MOVWF	PORTE	; RE0 as Input for Operation Mode Switch
 	
-	BSF	PIE1,TMR1IE
+	CLRF	TRISC	; PORTC as Output
+	CLRF	TRISD	; PORTD as Output
+					
+	BSF	OPTION_REG,7		; Disables Internal Portb Pullups
+	
+	BSF	OPTION_REG,INTEDG	; Enables RB0 to interrupt on rising
+					; edge
+;	BCF	OPTION_REG,INTEDG	; Enables RB0 to interrupt on falling
+					; edge
+					
+;	BCF	OPTION_REG,RBPU		; Enables Internal Portb Pullups
 	
 	BANKSEL PORTA	; Return to Bank0 (Bank where PORTA reg is located)
 	
@@ -76,56 +98,171 @@ SETUP	NOP
 	CALL	TMR1_LD
 	
 	; TMR1 INTERRUPT SETUP
-	BSF	INTCON,PEIE
-	BSF	INTCON,GIE
+	
+	BANKSEL	PIE1		; Switch to bank which PIE1 is located
+	BSF	PIE1,TMR1IE	; TMR1 Interrupt Enable
+	BANKSEL	PIR1		; Return to bank 0 where PIR1 is located
+	
+	BSF	INTCON,PEIE	; Peripheral Interrupt Enable (for TMR1 Enable)
+	
+	;;;;;;;;;;;;;; STOP BUTTON AND INTERNAL INTERRUP SETUP ;;;;;;;;;;;;;;
+	
+	BSF	INTCON,RBIE
+	BSF	INTCON,GIE	; General Interrupt Enable
 	
 	;;;;;;;;;;;;;;;;;;;;; VARIABLES INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;
 	
-	MOVLW	.1
-	MOVWF	OPER_MODE
+	MOVLW	OP_SING		
+	MOVWF	OPER_MODE	; Single mode by default
 	
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;; END OF SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
-	GOTO	START
+	GOTO	ITERATS
 	
 	
-;	MOVLW	.2
-;	CALL	DISPLAY
-;	
-;	MOVLW	.4
-;	CALL	ADC_CONVER
-;	MOVWF	PORTC
-;	GOTO	$-3
-	
-;	MOVLW	.255
-;	XORWF	PORTC,F
-;	CALL	DELAY_500
-;	GOTO	$-3
 	
 	
-START
-	MOVLW	.4
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INTERATIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+	
+ITERATS	CLRF	TOTAL_TIME
+	
+	; Pot1 Time value read
+	MOVLW	.0		; Channel 0 selected
+	CALL	ADC_GET		; Save ADC Values
+	CALL	VOLT_TIME_CONV	; Volt to time conversion
+	MOVWF	TIME1		; Store value on TIME1
+	ADDWF	TOTAL_TIME,F	; Add time read to TOTAL_TIME
+	
+	; Pot2 Time value read
+	MOVLW	.1		; Channel 1 selected
 	CALL	ADC_GET
 	CALL	VOLT_TIME_CONV
+	MOVWF	TIME2		; Store value on TIME1
+	ADDWF	TOTAL_TIME,F
 	
-	MOVFW	TIME
-	MOVWF	PORTC
+	; Pot3 Time value read
+	MOVLW	.2		; Channel 2 selected
+	CALL	ADC_GET
+	CALL	VOLT_TIME_CONV
+	MOVWF	TIME3		; Store value on TIME1
+	ADDWF	TOTAL_TIME,F
+	
+	; Pot4 Time value read
+	MOVLW	.4		; Channel 4 selected
+	CALL	ADC_GET
+	CALL	VOLT_TIME_CONV
+	MOVWF	TIME4		; Store value on TIME1
+	ADDWF	TOTAL_TIME,F
+	
+	
+	
+	
+	; Checks if individual times are less than 1 seg
+	MOVLW	.1
+	SUBWF	TIME1,W
+	BTFSS	STATUS,C
+	GOTO	ITERATS		; Less than 0, return and check again
+	MOVLW	.1
+	SUBWF	TIME2,W
+	BTFSS	STATUS,C
+	GOTO	ITERATS		; Less than 0, return and check again
+	MOVLW	.1
+	SUBWF	TIME3,W
+	BTFSS	STATUS,C
+	GOTO	ITERATS		; Less than 0, return and check again
+	MOVLW	.1
+	SUBWF	TIME4,W
+	BTFSS	STATUS,C
+	GOTO	ITERATS		; Less than 0, return and check again
+	
+	; Checks pass, now lets check the total time if it is in the range
+	; of 4 to 10
+	
+	MOVLW	.10
+	SUBWF	TOTAL_TIME,W	; Checks if TOTAL_TIME > 10
+	BTFSS	STATUS,C	; Check status looking for the carrier
+	GOTO	OP_SEL		; if do, the system goes to operation mode check
+	GOTO	ITERATS		; else, we need to restart interations
+	
+
+;;;;;;;;;;;;;;;;;;;;;;; OPERATION MODE SWITCH CHECK ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+
+OP_SEL	BTFSS	PORTE,0
+	GOTO	OP_SING		; Switch open, Single Mode selected
+	GOTO	OP_DB1
+	
+OP_SING	GOTO	MAIN_SG		; Just start main single mode, there is nothing 
+				; else to do
+	
+; Checks which one is greater, TIME1 or TIME3
+OP_DB1	MOVFW	TIME1
+	SUBWF	TIME3,W
+	BTFSS	STATUS,C
+	GOTO	T1_WINS
+	GOTO	T3_WINS
+	
+T1_WINS	MOVFW	TIME1
+	MOVWF	TIME1_D
+	GOTO	OP_DB2
+	
+T3_WINS	MOVFW	TIME3
+	MOVWF	TIME1_D
+	GOTO	OP_DB2
+	
+; Checks which one is greater, TIME1 or TIME3
+	
+OP_DB2	MOVFW	TIME2
+	SUBWF	TIME4,W
+	BTFSS	STATUS,C
+	GOTO	T2_WINS
+	GOTO	T4_WINS
+	
+T2_WINS	MOVFW	TIME2
+	MOVWF	TIME2_D
+	GOTO	OP_DB2
+	
+T4_WINS	MOVFW	TIME4
+	MOVWF	TIME2_D
+	GOTO	OP_DB2
+	
+	GOTO	MAIN_DB		; Starts Double program
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SINGLE MODE PROGRAM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+MAIN_DB
 	
 	
 	
 	
 	
 	
-	GOTO	START
 	
 	
 	
-TMR1_LD	MOVLW	0X0B
-	MOVWF	TMR1H
-	MOVLW	0XDB
-	MOVWF	TMR1L
-	BSF	T1CON,TMR1ON
-	RETURN
+	GOTO	MAIN_DB
+	
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DOUBLE MODE PROGRAM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+
+MAIN_SG	
+	
+	
+	
+	
+	
+	
+	
+	
+	GOTO	MAIN_SG
+	
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ISR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -135,8 +272,20 @@ IRQ	MOVWF	BACKUP_W	; w and status backup
 	MOVFW	STATUS
 	MOVWF	BACKUP_STA
 	
+	BTFSC	PIR1,TMR1IF
+	GOTO	TMR_IRQ
 	
-	DECFSZ	TMR1_TICK,F	; Ask if tick = 2
+	BTFSC	INTCON,RBIF
+	GOTO	STP_IRQ
+	GOTO	RFI
+	
+STP_IRQ	MOVLW	OP_EMER
+	MOVWF	OPER_MODE
+	BCF	INTCON,RBIF
+	GOTO	RFI
+	
+	
+TMR_IRQ	DECFSZ	TMR1_TICK,F	; Ask if tick = 2
 	GOTO	RFI		; If not, return from interrupt
 	
 	MOVLW	.2		; If afirmative...
@@ -144,6 +293,7 @@ IRQ	MOVWF	BACKUP_W	; w and status backup
 	
 	MOVLW	.255
 	XORWF	PORTE,F
+	GOTO	RFI
 	
 	
 RFI	BCF	PIR1,TMR1IF
