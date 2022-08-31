@@ -1,0 +1,156 @@
+MPLINK 4.49, Linker
+Linker Map File - Created Wed Aug 31 13:54:35 2022
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000002
+                   .cinit    romdata   0x000001    program   0x000004
+                   .org_1       code   0x000004    program   0x0002c6
+      .config_2007_MAIN.O       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000002      
+                            0x000004    0x000166      
+                            0x002007    0x002007      
+            359 out of 8454 program addresses used, program memory utilization is 4%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  ADC_GET   0x00004c    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\ADC.asm
+                  D1_CONT   0x00014f    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  D2_CONT   0x000153    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                DELAY_100   0x00001c    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                 DELAY_20   0x000035    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  DELAY_5   0x000040    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                 DELAY_50   0x00002a    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                DELAY_500   0x00000b    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  DISPLAY   0x000079    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Displays.asm
+                  DLoop10   0x000018    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  DLoop11   0x000019    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  DLoop12   0x00001a    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop2   0x00004a    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop3   0x000026    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop4   0x000027    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop5   0x000028    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop6   0x000010    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop7   0x000011    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop8   0x000012    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop9   0x000017    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   D_MODE   0x000143    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   Dloop1   0x000049    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   E_MODE   0x000157    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+              FIXING_VOLT   0x000074    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\ADC.asm
+                      IRQ   0x000101    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  ITERATS   0x0000a0    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  MAIN_DB   0x000100    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  MAIN_SG   0x0000ff    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   OP_DB1   0x0000db    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   OP_DB2   0x0000e8    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   OP_DB3   0x0000f5    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   OP_SEL   0x0000ce    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                    OP_SG   0x0000d1    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   PLoop1   0x000042    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  PLoop13   0x00002c    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  PLoop14   0x00002e    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  PLoop15   0x000037    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  PLoop16   0x000039    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   PLoop2   0x000044    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   PLoop3   0x00001e    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   PLoop4   0x000020    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   PLoop5   0x00000d    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   PLoop6   0x00000f    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                      RFI   0x000162    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  S1_CONT   0x000133    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  S2_CONT   0x000137    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  S3_CONT   0x00013b    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  S4_CONT   0x00013f    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                    SETUP   0x000081    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  STP_IRQ   0x00015a    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   S_MODE   0x00011b    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  T1_WINS   0x0000e0    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  T2_WINS   0x0000ed    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  T3_WINS   0x0000e4    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  T4_WINS   0x0000f1    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                    TABLE   0x00007c    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Displays.asm
+                  TMR1_LD   0x000005    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  TMR_IRQ   0x000109    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+           VOLT_TIME_CONV   0x00006a    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\ADC.asm
+             _.org_1_005C   0x00005c    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\ADC.asm
+             _.org_1_005F   0x00005f    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\ADC.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                  TMR1_LD   0x000005    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                DELAY_500   0x00000b    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   PLoop5   0x00000d    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   PLoop6   0x00000f    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop6   0x000010    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop7   0x000011    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop8   0x000012    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop9   0x000017    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  DLoop10   0x000018    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  DLoop11   0x000019    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  DLoop12   0x00001a    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                DELAY_100   0x00001c    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   PLoop3   0x00001e    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   PLoop4   0x000020    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop3   0x000026    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop4   0x000027    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop5   0x000028    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                 DELAY_50   0x00002a    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  PLoop13   0x00002c    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  PLoop14   0x00002e    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                 DELAY_20   0x000035    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  PLoop15   0x000037    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  PLoop16   0x000039    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  DELAY_5   0x000040    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   PLoop1   0x000042    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   PLoop2   0x000044    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   Dloop1   0x000049    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                   DLoop2   0x00004a    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Tempos.asm
+                  ADC_GET   0x00004c    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\ADC.asm
+             _.org_1_005C   0x00005c    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\ADC.asm
+             _.org_1_005F   0x00005f    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\ADC.asm
+           VOLT_TIME_CONV   0x00006a    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\ADC.asm
+              FIXING_VOLT   0x000074    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\ADC.asm
+                  DISPLAY   0x000079    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Displays.asm
+                    TABLE   0x00007c    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Displays.asm
+                    SETUP   0x000081    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  ITERATS   0x0000a0    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   OP_SEL   0x0000ce    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                    OP_SG   0x0000d1    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   OP_DB1   0x0000db    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  T1_WINS   0x0000e0    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  T3_WINS   0x0000e4    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   OP_DB2   0x0000e8    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  T2_WINS   0x0000ed    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  T4_WINS   0x0000f1    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   OP_DB3   0x0000f5    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  MAIN_SG   0x0000ff    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  MAIN_DB   0x000100    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                      IRQ   0x000101    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  TMR_IRQ   0x000109    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   S_MODE   0x00011b    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  S1_CONT   0x000133    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  S2_CONT   0x000137    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  S3_CONT   0x00013b    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  S4_CONT   0x00013f    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   D_MODE   0x000143    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  D1_CONT   0x00014f    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  D2_CONT   0x000153    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                   E_MODE   0x000157    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                  STP_IRQ   0x00015a    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+                      RFI   0x000162    program     static D:\Armando\OneDrive\PROJECTS\2022\2022-08-28 - PIC16F Traffic Lights\CODE\Main.asm
+
+

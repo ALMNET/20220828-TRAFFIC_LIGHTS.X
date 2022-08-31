@@ -1,4 +1,4 @@
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE  1
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -13,13 +13,12 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00001         LIST
                       00002 
                       00003 ;==========================================================================
-                      00004 ; Build date : Oct 24 2019
-                      00005 ;  MPASM PIC16F877A processor include
-                      00006 ; 
-                      00007 ;  (c) Copyright 1999-2019 Microchip Technology, All rights reserved
-                      00008 ;==========================================================================
-                      00009 
-                      00567         LIST
+                      00004 ;  MPASM PIC16F877A processor include
+                      00005 ; 
+                      00006 ;  (c) Copyright 1999-2013 Microchip Technology, All rights reserved
+                      00007 ;==========================================================================
+                      00008 
+                      00566         LIST
                       00007         
                       00008 ; ==============================================================================
                       00009 ; ===============================> CONFIG WORDS <===============================
@@ -57,13 +56,13 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00041         RADIX   DEC
                       00042         
                       00043         
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE  2
+                      00044         ORG     0X00    ; Reset Vector
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00044         ORG     0X00    ; Reset Vector
 0000   2???           00045         GOTO    SETUP
                       00046         
                       00047         ORG     0X04    ; Interrupt Vector
@@ -116,13 +115,13 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 001C   306E           00044 DELAY_100:      MOVLW   .110
 001D   00C0           00045                 MOVWF   PDel0
 001E   30B5           00046 PLoop3:         MOVLW   .181
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE  3
+001F   00C1           00047                 MOVWF   PDel1
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-001F   00C1           00047                 MOVWF   PDel1
 0020   0064           00048 PLoop4:         CLRWDT
 0021   0064           00049                 CLRWDT
 0022   0BC1           00050                 DECFSZ  PDel1,1
@@ -175,13 +174,13 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0048   2???           00097                 GOTO    PLoop1
 0049   2???           00098 Dloop1:         GOTO    DLoop2
 004A   0064           00099 DLoop2:         CLRWDT
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE  4
+004B   0008           00100                 RETURN
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-004B   0008           00100                 RETURN
                       00101 
                       00102 
                       00051         INCLUDE "ADC.asm"       ; ADC routines library
@@ -234,13 +233,13 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0061   1683 1303      00047                 BANKSEL ADRESL
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
 0063   081E           00048                 MOVFW   ADRESL
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE  5
+0064   1283 1303      00049                 BANKSEL ADRESH
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0064   1283 1303      00049                 BANKSEL ADRESH
 0066   00D1           00050                 MOVWF   VOLTAGE_L
                       00051                 
 0067   081E           00052                 MOVFW   ADRESH
@@ -293,13 +292,13 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00014         
                       00015 
                       00016 
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE  6
+                      00053         
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00053         
                       00054         ;;;;;;;;;;;;;;;;;;;;;;;;; GENERAL SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                       00055         
 0081   0000           00056 SETUP   NOP
@@ -352,13 +351,13 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
 0097   00A2           00097         MOVWF   TMR1_TICK
                       00098         
 0098   3030           00099         MOVLW   B'00110000'
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE  7
+0099   0090           00100         MOVWF   T1CON
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0099   0090           00100         MOVWF   T1CON
                       00101         
 009A   2???           00102         CALL    TMR1_LD
                       00103         
@@ -411,13 +410,13 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00150         
                       00151         ; Pot4 Time value read
 00B3   3004           00152         MOVLW   .4              ; Channel 4 selected
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE  8
+00B4   2???           00153         CALL    ADC_GET
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00B4   2???           00153         CALL    ADC_GET
 00B5   2???           00154         CALL    VOLT_TIME_CONV
 00B6   00A7           00155         MOVWF   TIME4           ; Store value on TIME1
 00B7   00AE           00156         MOVWF   TIME4_BK        ; Backup for later interrupt purposes
@@ -470,13 +469,13 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
 00D6   140C           00203         BSF     PIE1,TMR1IE     ; TMR1 Interrupt Enable
 00D7   1283 1303      00204         BANKSEL PIR1            ; Return to bank 0 where PIR1 is located
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE  9
+                      00205         
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00205         
 00D9   160B           00206         BSF     INTCON,INTE     ; Emergency Stop Interrupt Enable
 00DA   2???           00207         GOTO    MAIN_SG         ; Just start main single mode, there is nothing 
                       00208                                 ; else to do
@@ -529,13 +528,13 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
 00FD   160B           00254         BSF     INTCON,INTE     ; Emergency Stop Interrupt Enable
 00FE   2???           00255         GOTO    MAIN_DB         ; Starts Double program
                       00256         
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 10
+                      00257 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 10
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00257 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                       00258 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SINGLE MODE PROGRAM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                       00259 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                       00260         
@@ -588,13 +587,13 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00307 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; TMR1 INTERRUPT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                       00308         
 0109                  00309 TMR_IRQ 
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 11
+                      00310         
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 11
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00310         
 0109   3002           00311         MOVLW   .2
 010A   0689           00312         XORWF   PORTE,F         ; Just keepalive led toggle
                       00313         
@@ -647,13 +646,13 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00360         
 012D   082C           00361         MOVFW   TIME2_BK
 012E   00A5           00362         MOVWF   TIME2
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 12
+                      00363         
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 12
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00363         
 012F   082D           00364         MOVFW   TIME3_BK
 0130   00A6           00365         MOVWF   TIME3
                       00366         
@@ -706,13 +705,13 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00413         
 014F   03A8           00414 D1_CONT DECF    TIME1_D,F
 0150   3066           00415         MOVLW   B'01100110'
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 13
+0151   0087           00416         MOVWF   PORTC
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 13
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0151   0087           00416         MOVWF   PORTC
 0152   2???           00417         GOTO    RFI
                       00418         
 0153   03A9           00419 D2_CONT DECF    TIME2_D,F
@@ -750,7 +749,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00451         
                       00452         
 3F39                  00453         END
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 14
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 14
 
 
 SYMBOL TABLE
@@ -809,7 +808,7 @@ CCPR2                             0000001B
 CCPR2H                            0000001C
 CCPR2L                            0000001B
 CHS0                              00000003
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 15
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 15
 
 
 SYMBOL TABLE
@@ -868,7 +867,7 @@ EECON1                            0000018C
 EECON2                            0000018D
 EEDATA                            0000010C
 EEDATH                            0000010E
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 16
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 16
 
 
 SYMBOL TABLE
@@ -927,7 +926,7 @@ OP_DB1                            000000DB
 OP_DB2                            000000E8
 OP_DB3                            000000F5
 OP_DOUB                           2
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 17
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 17
 
 
 SYMBOL TABLE
@@ -986,7 +985,7 @@ RA4                               00000004
 RA5                               00000005
 RB0                               00000000
 RB1                               00000001
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 18
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 18
 
 
 SYMBOL TABLE
@@ -1045,7 +1044,7 @@ S4_CONT                           0000013F
 SEN                               00000000
 SETUP                             00000081
 SHIFT_REG                         00000050
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 19
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 19
 
 
 SYMBOL TABLE
@@ -1104,7 +1103,7 @@ TIME4                             00000027
 TIME4_BK                          0000002E
 TMR0                              00000001
 TMR0IE                            00000005
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 20
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 20
 
 
 SYMBOL TABLE
@@ -1163,7 +1162,7 @@ TRISD3                            00000003
 TRISD4                            00000004
 TRISD5                            00000005
 TRISD6                            00000006
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 21
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 21
 
 
 SYMBOL TABLE
@@ -1222,7 +1221,7 @@ _IDLOC3                           00002003
 _LP_OSC                           00003FFC
 _LVP_OFF                          00003F7F
 _LVP_ON                           00003FFF
-MPASM 5.86                          MAIN.ASM   8-31-2022  0:48:42         PAGE 22
+MPASM  5.51                          MAIN.ASM   8-31-2022  13:54:34         PAGE 22
 
 
 SYMBOL TABLE
@@ -1241,6 +1240,7 @@ _WRT_HALF                         000039FF
 _WRT_OFF                          00003FFF
 _XT_OSC                           00003FFD
 __16F877A                         00000001
+__DEBUG                           1
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed

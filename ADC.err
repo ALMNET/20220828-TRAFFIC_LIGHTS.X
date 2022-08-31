@@ -1,0 +1,83 @@
+Error[150]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 22 : Labels must be defined in a code or data section when making an object file
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 22 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 23 : Symbol not previously defined (STATUS)
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 23 : Symbol not previously defined (C)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 23 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 24 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 25 : Symbol not previously defined (STATUS)
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 25 : Symbol not previously defined (C)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 25 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 26 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 27 : Symbol not previously defined (STATUS)
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 27 : Symbol not previously defined (C)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 27 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 28 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 30 : Symbol not previously defined (ADCON0)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 30 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 31 : Symbol not previously defined (ADCON0)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 31 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 32 : Symbol not previously defined (ADCON0)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 32 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 34 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 35 : Symbol not previously defined (ADCON0)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 35 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 37 : Symbol not previously defined (PIR1)
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 37 : Symbol not previously defined (ADIF)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 37 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 38 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 39 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 40 : Executable code and data must be defined in an appropriate section
+Error[150]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 41 : Labels must be defined in a code or data section when making an object file
+Error[126]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 41 : Argument out of range (FFFF not between 0000 and 1FFF)
+Message[306] D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 41 : Crossing page boundary -- ensure page bits are set.
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 41 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 42 : Symbol not previously defined (ADCON0)
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 42 : Symbol not previously defined (GO)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 42 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 43 : Symbol not previously defined (PIR1)
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 43 : Symbol not previously defined (ADIF)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 43 : Executable code and data must be defined in an appropriate section
+Error[150]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 44 : Labels must be defined in a code or data section when making an object file
+Error[126]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 44 : Argument out of range (FFFF not between 0000 and 1FFF)
+Message[306] D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 44 : Crossing page boundary -- ensure page bits are set.
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 44 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 45 : Symbol not previously defined (PIR1)
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 45 : Symbol not previously defined (ADIF)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 45 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 47 : Symbol not previously defined (ADRESL)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 47 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 47 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 48 : Symbol not previously defined (ADRESL)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 48 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 49 : Symbol not previously defined (ADRESH)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 49 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 49 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 50 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 52 : Symbol not previously defined (ADRESH)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 52 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 53 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 54 : Executable code and data must be defined in an appropriate section
+Error[150]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 57 : Labels must be defined in a code or data section when making an object file
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 57 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 58 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 60 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 61 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 62 : Symbol not previously defined (STATUS)
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 62 : Symbol not previously defined (Z)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 62 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 63 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 66 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 67 : Executable code and data must be defined in an appropriate section
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 68 : Symbol not previously defined (STATUS)
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 68 : Symbol not previously defined (C)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 68 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 69 : Executable code and data must be defined in an appropriate section
+Error[150]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 71 : Labels must be defined in a code or data section when making an object file
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 71 : Symbol not previously defined (STATUS)
+Error[113]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 71 : Symbol not previously defined (C)
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 71 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 72 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 73 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 75 : Executable code and data must be defined in an appropriate section
+Error[152]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 76 : Executable code and data must be defined in an appropriate section
+Error[129]   D:\ARMANDO\ONEDRIVE\PROJECTS\2022\2022-08-28 - PIC16F TRAFFIC LIGHTS\CODE\ADC.ASM 85 : Expected (END)

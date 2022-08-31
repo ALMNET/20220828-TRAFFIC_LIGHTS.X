@@ -1,0 +1,217 @@
+MPASM  5.51                           ADC.ASM   8-31-2022  13:53:34         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ; ==============================================================================
+                      00002 ; ===================================> ADC <====================================
+                      00003 ; ==============================================================================
+                      00004 
+                      00005         
+                      00006         
+                      00007         CBLOCK  0X50
+  00000050            00008         SHIFT_REG
+  00000051            00009         VOLTAGE_L
+  00000052            00010         VOLTAGE_H
+  00000053            00011         MID_RAN_V
+  00000054            00012         ADC_CONT
+  00000055            00013         HUNDREDS
+  00000056            00014         TENS
+  00000057            00015         UNIT
+  00000058            00016         TIME
+                      00017         ENDC
+                      00018         
+                      00019 
+                      00020 ; ============================> ADC CONVERSION <============================
+                      00021 
+Error[150]  : Labels must be defined in a code or data section when making an object file
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00022 ADC_GET:        MOVWF   SHIFT_REG       ; Saves w value into SHIFT_REG
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (C)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00023                 BCF     STATUS,C        ; Clear Carry before rotation
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00024                 RLF     SHIFT_REG,F     ; 1 Time left rotation
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (C)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00025                 BCF     STATUS,C        ; Clear Carry before rotation
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00026                 RLF     SHIFT_REG,F     ; 2 Times left rotation
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (C)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00027                 BCF     STATUS,C        ; Clear Carry before rotation
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00028                 RLF     SHIFT_REG,F     ; 3 Times left rotation
+                      00029                 
+Error[113]  : Symbol not previously defined (ADCON0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00030                 BCF     ADCON0,3
+Error[113]  : Symbol not previously defined (ADCON0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00031                 BCF     ADCON0,4
+Error[113]  : Symbol not previously defined (ADCON0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00032                 BCF     ADCON0,5        ; Set Channel 0 by default
+                      00033                 
+MPASM  5.51                           ADC.ASM   8-31-2022  13:53:34         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00034                 MOVFW   SHIFT_REG
+Error[113]  : Symbol not previously defined (ADCON0)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00035                 IORWF   ADCON0,F        ; Set desired channel using w
+                      00036         
+Error[113]  : Symbol not previously defined (PIR1)
+Error[113]  : Symbol not previously defined (ADIF)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00037                 BCF     PIR1,ADIF
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00038                 MOVLW   .7
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00039                 MOVWF   ADC_CONT
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00040                 DECFSZ  ADC_CONT,F
+Error[150]  : Labels must be defined in a code or data section when making an object file
+Error[126]  : Argument out of range (FFFF not between 0000 and 1FFF)
+Message[306]: Crossing page boundary -- ensure page bits are set.
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00041                 GOTO    $-1
+Error[113]  : Symbol not previously defined (ADCON0)
+Error[113]  : Symbol not previously defined (GO)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00042                 BSF     ADCON0,GO
+Error[113]  : Symbol not previously defined (PIR1)
+Error[113]  : Symbol not previously defined (ADIF)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00043                 BTFSS   PIR1,ADIF
+Error[150]  : Labels must be defined in a code or data section when making an object file
+Error[126]  : Argument out of range (FFFF not between 0000 and 1FFF)
+Message[306]: Crossing page boundary -- ensure page bits are set.
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00044                 GOTO    $-1
+Error[113]  : Symbol not previously defined (PIR1)
+Error[113]  : Symbol not previously defined (ADIF)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00045                 BCF     PIR1,ADIF
+                      00046                 
+Error[113]  : Symbol not previously defined (ADRESL)
+Error[152]  : Executable code and data must be defined in an appropriate section
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00047                 BANKSEL ADRESL
+Error[113]  : Symbol not previously defined (ADRESL)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00048                 MOVFW   ADRESL
+Error[113]  : Symbol not previously defined (ADRESH)
+Error[152]  : Executable code and data must be defined in an appropriate section
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00049                 BANKSEL ADRESH
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00050                 MOVWF   VOLTAGE_L
+                      00051                 
+MPASM  5.51                           ADC.ASM   8-31-2022  13:53:34         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Error[113]  : Symbol not previously defined (ADRESH)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00052                 MOVFW   ADRESH
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00053                 MOVWF   VOLTAGE_H
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00054                 RETURN
+                      00055                 
+                      00056 
+Error[150]  : Labels must be defined in a code or data section when making an object file
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00057 VOLT_TIME_CONV: CLRF    MID_RAN_V
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00058                 CLRF    TIME
+                      00059                 
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00060                 MOVLW   .255
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00061                 SUBWF   VOLTAGE_L,W
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (Z)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00062                 BTFSC   STATUS,Z
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00063                 INCF    TIME,F
+                      00064                 
+                      00065                 
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00066                 MOVLW   .125
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00067                 SUBWF   VOLTAGE_L,W
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (C)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00068                 BTFSC   STATUS,C
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00069                 INCF    TIME,F
+                      00070                 
+Error[150]  : Labels must be defined in a code or data section when making an object file
+Error[113]  : Symbol not previously defined (STATUS)
+Error[113]  : Symbol not previously defined (C)
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00071 FIXING_VOLT:    BCF     STATUS,C
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00072                 RLF     VOLTAGE_H,W ; Multiply by 2
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00073                 ADDWF   TIME,F  ; Adds medium range voltage if do
+                      00074                 
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00075                 MOVFW   TIME
+Error[152]  : Executable code and data must be defined in an appropriate section
+0000                  00076                 RETURN
+                      00077                 
+MPASM  5.51                           ADC.ASM   8-31-2022  13:53:34         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00078                 
+                      00079                 
+                      00080                 
+                      00081 
+                      00082         
+                      00083                 
+                      00084                 
+Error[129]  : Expected (END)
+MPASM  5.51                           ADC.ASM   8-31-2022  13:53:34         PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ADC_CONT                          00000054
+ADC_GET                           00000000
+FIXING_VOLT                       00000000
+HUNDREDS                          00000055
+MID_RAN_V                         00000053
+SHIFT_REG                         00000050
+TENS                              00000056
+TIME                              00000058
+UNIT                              00000057
+VOLTAGE_H                         00000052
+VOLTAGE_L                         00000051
+VOLT_TIME_CONV                    00000000
+__16F877A                         00000001
+__DEBUG                           1
+
+Errors   :    81
+Warnings :     0 reported,     0 suppressed
+Messages :     2 reported,     0 suppressed
+
+
