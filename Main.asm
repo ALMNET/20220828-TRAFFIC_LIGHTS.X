@@ -26,11 +26,15 @@
 	TIME1_D		; Time 1 for Double Oper (The greater bet TIME1 and TIME3)
 	TIME2_D		; Time 2 for Double Oper (The greater bet TIME2 and TIME4)
 	TOTAL_TIME	; Result of TIME1 + TIME2 + TIME3 + TIME4
+	TIME1_BK	; TIME1 Backup to restore timers when a cycle is completed
+	TIME2_BK	; TIME2 Backup
+	TIME3_BK	; TIME3 Backup
+	TIME4_BK	; TIME4 Backup
 	ENDC
 	
-#DEFINE	OP_SING	.1	; Just operation mode definitions
-#DEFINE	OP_DOUB	.2
-#DEFINE	OP_EMER	.3
+#DEFINE	OP_SING	1	; Just operation mode definitions
+#DEFINE	OP_DOUB	2
+#DEFINE	OP_EMER	3
 	
 	
 	
@@ -132,6 +136,7 @@ ITERATS	CLRF	TOTAL_TIME
 	CALL	ADC_GET		; Save ADC Values
 	CALL	VOLT_TIME_CONV	; Volt to time conversion
 	MOVWF	TIME1		; Store value on TIME1
+	MOVWF	TIME1_BK	; Backup for later interrupt purposes
 	ADDWF	TOTAL_TIME,F	; Add time read to TOTAL_TIME
 	
 	; Pot2 Time value read
@@ -139,6 +144,7 @@ ITERATS	CLRF	TOTAL_TIME
 	CALL	ADC_GET
 	CALL	VOLT_TIME_CONV
 	MOVWF	TIME2		; Store value on TIME1
+	MOVWF	TIME2_BK	; Backup for later interrupt purposes
 	ADDWF	TOTAL_TIME,F
 	
 	; Pot3 Time value read
@@ -146,6 +152,7 @@ ITERATS	CLRF	TOTAL_TIME
 	CALL	ADC_GET
 	CALL	VOLT_TIME_CONV
 	MOVWF	TIME3		; Store value on TIME1
+	MOVWF	TIME3_BK	; Backup for later interrupt purposes
 	ADDWF	TOTAL_TIME,F
 	
 	; Pot4 Time value read
@@ -153,6 +160,7 @@ ITERATS	CLRF	TOTAL_TIME
 	CALL	ADC_GET
 	CALL	VOLT_TIME_CONV
 	MOVWF	TIME4		; Store value on TIME1
+	MOVWF	TIME4_BK	; Backup for later interrupt purposes
 	ADDWF	TOTAL_TIME,F
 	
 	
@@ -190,10 +198,13 @@ ITERATS	CLRF	TOTAL_TIME
 	
 
 OP_SEL	BTFSS	PORTE,0
-	GOTO	OP_SING		; Switch open, Single Mode selected
+	GOTO	OP_SG		; Switch open, Single Mode selected
 	GOTO	OP_DB1
 	
-OP_SING	GOTO	MAIN_SG		; Just start main single mode, there is nothing 
+OP_SG	MOVLW	.1
+	MOVWF	OPER_MODE
+	CALL	DISPLAY
+	GOTO	MAIN_SG		; Just start main single mode, there is nothing 
 				; else to do
 	
 ; Checks which one is greater, TIME1 or TIME3
@@ -221,36 +232,23 @@ OP_DB2	MOVFW	TIME2
 	
 T2_WINS	MOVFW	TIME2
 	MOVWF	TIME2_D
-	GOTO	OP_DB2
+	GOTO	OP_DB3
 	
 T4_WINS	MOVFW	TIME4
 	MOVWF	TIME2_D
-	GOTO	OP_DB2
+	GOTO	OP_DB3
 	
+OP_DB3	MOVLW	OP_DOUB
+	MOVWF	OPER_MODE
+	CALL	DISPLAY
+	
+	MOVFW	OP_SING
 	GOTO	MAIN_DB		; Starts Double program
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SINGLE MODE PROGRAM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
-MAIN_DB
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	GOTO	MAIN_DB
-	
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DOUBLE MODE PROGRAM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	
-
 MAIN_SG	
 	
 	
@@ -260,7 +258,25 @@ MAIN_SG
 	
 	
 	
+	
 	GOTO	MAIN_SG
+	
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DOUBLE MODE PROGRAM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+
+MAIN_DB	
+	
+	
+	
+	
+	
+	
+	
+	
+	GOTO	MAIN_DB
 	
 
 
@@ -279,11 +295,7 @@ IRQ	MOVWF	BACKUP_W	; w and status backup
 	GOTO	STP_IRQ
 	GOTO	RFI
 	
-STP_IRQ	MOVLW	OP_EMER
-	MOVWF	OPER_MODE
-	BCF	INTCON,RBIF
-	GOTO	RFI
-	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; TMR1 INTERRUPT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
 TMR_IRQ	DECFSZ	TMR1_TICK,F	; Ask if tick = 2
 	GOTO	RFI		; If not, return from interrupt
@@ -291,10 +303,83 @@ TMR_IRQ	DECFSZ	TMR1_TICK,F	; Ask if tick = 2
 	MOVLW	.2		; If afirmative...
 	MOVWF	TMR1_TICK	; Tick Reload
 	
-	MOVLW	.255
-	XORWF	PORTE,F
+	MOVLW	.2
+	XORWF	PORTE,F		; Just keepalive led toggle
+	
+	
+	CLRW
+	XORWF	TIME1,F
+	BTFSS	STATUS,Z
+	GOTO	S1_CONT
+	CLRW
+	XORWF	TIME2,F
+	BTFSS	STATUS,Z
+	GOTO	S2_CONT
+	CLRW
+	XORWF	TIME3,F
+	BTFSS	STATUS,Z
+	GOTO	S3_CONT
+	CLRW
+	XORWF	TIME4,F
+	BTFSS	STATUS,Z
+	GOTO	S4_CONT
+	
+	
+	MOVFW	TIME1_BK	; Once a cycle is completed, the values are restored
+	MOVWF	TIME1		; and the process restarts again
+	
+	MOVFW	TIME2_BK
+	MOVWF	TIME2
+	
+	MOVFW	TIME3_BK
+	MOVWF	TIME3
+	
+	MOVFW	TIME4_BK
+	MOVWF	TIME4
+	
+	
+	
+	DECFSZ	TIME1,F
+	GOTO	S1_CONT		; Single mode Traffic Light 1 control
+	DECFSZ	TIME2,F
+	GOTO	S2_CONT		; Single mode Traffic Light 2 control
+	DECFSZ	TIME3,F
+	GOTO	S3_CONT		; Single mode Traffic Light 3 control
+	DECFSZ	TIME4,F
+	GOTO	S4_CONT		; Single mode Traffic Light 4 control
+	
+S1_CONT	DECF	TIME1,F
+	MOVLW	B'01010110'
+	MOVWF	PORTC
 	GOTO	RFI
 	
+S2_CONT	DECF	TIME2,F
+	MOVLW	B'01011001'
+	MOVWF	PORTC
+	GOTO	RFI
+	
+S3_CONT	DECF	TIME3,F
+	MOVLW	B'01100101'
+	MOVWF	PORTC
+	GOTO	RFI
+	
+S4_CONT	DECF	TIME4,F
+	MOVLW	B'10010101'
+	MOVWF	PORTC
+	
+	GOTO	RFI
+	
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; RB0 INTERRUPT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+	
+STP_IRQ	MOVLW	OP_EMER
+	MOVWF	OPER_MODE
+	BCF	INTCON,RBIF
+	GOTO	RFI
+	
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; RETURN FROM INTERRUPT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
 RFI	BCF	PIR1,TMR1IF
 	

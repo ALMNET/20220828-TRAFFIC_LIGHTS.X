@@ -1,4 +1,4 @@
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE  1
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -42,30 +42,34 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
   00000028            00026         TIME1_D         ; Time 1 for Double Oper (The greater bet TIME1 and TIME3)
   00000029            00027         TIME2_D         ; Time 2 for Double Oper (The greater bet TIME2 and TIME4)
   0000002A            00028         TOTAL_TIME      ; Result of TIME1 + TIME2 + TIME3 + TIME4
-                      00029         ENDC
-                      00030         
-                      00031 #DEFINE OP_SING .1      ; Just operation mode definitions
-                      00032 #DEFINE OP_DOUB .2
-                      00033 #DEFINE OP_EMER .3
+  0000002B            00029         TIME1_BK        ; TIME1 Backup to restore timers when a cycle is completed
+  0000002C            00030         TIME2_BK        ; TIME2 Backup
+  0000002D            00031         TIME3_BK        ; TIME3 Backup
+  0000002E            00032         TIME4_BK        ; TIME4 Backup
+                      00033         ENDC
                       00034         
-                      00035         
-                      00036         
-                      00037         RADIX   DEC
+                      00035 #DEFINE OP_SING 1       ; Just operation mode definitions
+                      00036 #DEFINE OP_DOUB 2
+                      00037 #DEFINE OP_EMER 3
                       00038         
                       00039         
-                      00040         ORG     0X00    ; Reset Vector
-0000   2???           00041         GOTO    SETUP
+                      00040         
+                      00041         RADIX   DEC
                       00042         
-                      00043         ORG     0X04    ; Interrupt Vector
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE  2
+                      00043         
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0004   2???           00044         GOTO    IRQ
-                      00045         
-                      00046         INCLUDE "Tempos.asm"    ; General delay file (Library)
+                      00044         ORG     0X00    ; Reset Vector
+0000   2???           00045         GOTO    SETUP
+                      00046         
+                      00047         ORG     0X04    ; Interrupt Vector
+0004   2???           00048         GOTO    IRQ
+                      00049         
+                      00050         INCLUDE "Tempos.asm"    ; General delay file (Library)
                       00001 ; ==============================================================================
                       00002 ; ==================================> TEMPO <===================================
                       00003 ; ==============================================================================
@@ -112,16 +116,16 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 001C   306E           00044 DELAY_100:      MOVLW   .110
 001D   00C0           00045                 MOVWF   PDel0
 001E   30B5           00046 PLoop3:         MOVLW   .181
-001F   00C1           00047                 MOVWF   PDel1
-0020   0064           00048 PLoop4:         CLRWDT
-0021   0064           00049                 CLRWDT
-0022   0BC1           00050                 DECFSZ  PDel1,1
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE  3
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
+001F   00C1           00047                 MOVWF   PDel1
+0020   0064           00048 PLoop4:         CLRWDT
+0021   0064           00049                 CLRWDT
+0022   0BC1           00050                 DECFSZ  PDel1,1
 0023   2???           00051                 GOTO    PLoop4
 0024   0BC0           00052                 DECFSZ  PDel0,1
 0025   2???           00053                 GOTO    PLoop3
@@ -171,16 +175,16 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0048   2???           00097                 GOTO    PLoop1
 0049   2???           00098 Dloop1:         GOTO    DLoop2
 004A   0064           00099 DLoop2:         CLRWDT
-004B   0008           00100                 RETURN
-                      00101 
-                      00102 
-                      00047         INCLUDE "ADC.asm"       ; ADC routines library
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE  4
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
+004B   0008           00100                 RETURN
+                      00101 
+                      00102 
+                      00051         INCLUDE "ADC.asm"       ; ADC routines library
                       00001 ; ==============================================================================
                       00002 ; ===================================> ADC <====================================
                       00003 ; ==============================================================================
@@ -230,16 +234,16 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0061   1683 1303      00047                 BANKSEL ADRESL
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
 0063   081E           00048                 MOVFW   ADRESL
-0064   1283 1303      00049                 BANKSEL ADRESH
-0066   00D1           00050                 MOVWF   VOLTAGE_L
-                      00051                 
-0067   081E           00052                 MOVFW   ADRESH
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE  5
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
+0064   1283 1303      00049                 BANKSEL ADRESH
+0066   00D1           00050                 MOVWF   VOLTAGE_L
+                      00051                 
+0067   081E           00052                 MOVFW   ADRESH
 0068   00D2           00053                 MOVWF   VOLTAGE_H
 0069   0008           00054                 RETURN
                       00055                 
@@ -272,320 +276,418 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00082         
                       00083                 
                       00084                 
-                      00048         INCLUDE "Displays.asm"  ; Simple 7 segment table library for 1, 2 and E
+                      00052         INCLUDE "Displays.asm"  ; Simple 7 segment table library for 1, 2 and E
                       00001 ; ==============================================================================
                       00002 ; ================================> DISPLAYS <==================================
                       00003 ; ==============================================================================
                       00004         
 0079   2???           00005 DISPLAY CALL    TABLE
 007A   0088           00006         MOVWF   PORTD
-                      00007         
-007B   0782           00008 TABLE   ADDWF   PCL,F
-007C   3479           00009         RETLW   B'01111001'     ; E
-007D   3406           00010         RETLW   B'00000110'     ; 1
-007E   345B           00011         RETLW   B'01011011'     ; 2
-                      00012         
-                      00013 
-                      00014 
-                      00049         
-                      00050         ;;;;;;;;;;;;;;;;;;;;;;;;; GENERAL SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                      00051         
-007F   0000           00052 SETUP   NOP
-0080   1683 1303      00053         BANKSEL TRISA
-                      00054         ;MOVLW  B'01101010'
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE  6
+007B   0008           00007         RETURN
+                      00008         
+007C   0782           00009 TABLE   ADDWF   PCL,F
+007D   3400           00010         RETLW   B'00000000'     ; 0, Display Off
+007E   3406           00011         RETLW   B'00000110'     ; 1
+007F   345B           00012         RETLW   B'01011011'     ; 2
+0080   3479           00013         RETLW   B'01111001'     ; E
+                      00014         
+                      00015 
+                      00016 
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00055         ;MOVWF  OSCCON
-0082   3083           00056         MOVLW   B'10000011'
+                      00053         
+                      00054         ;;;;;;;;;;;;;;;;;;;;;;;;; GENERAL SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00055         
+0081   0000           00056 SETUP   NOP
+0082   1683 1303      00057         BANKSEL TRISA
+                      00058         ;MOVLW  B'01101010'
+                      00059         ;MOVWF  OSCCON
+0084   3083           00060         MOVLW   B'10000011'
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0083   009F           00057         MOVWF   ADCON1
-0084   303F           00058         MOVLW   B'00111111'
+0085   009F           00061         MOVWF   ADCON1
+0086   303F           00062         MOVLW   B'00111111'
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0085   0085           00059         MOVWF   TRISA   ; RA0 as Input
-                      00060         
-0086   3001           00061         MOVLW   .1
-0087   0086           00062         MOVWF   PORTB   ; RB0 as Input for Stop Button
-0088   0089           00063         MOVWF   PORTE   ; RE0 as Input for Operation Mode Switch
+0087   0085           00063         MOVWF   TRISA   ; RA0 as Input
                       00064         
+0088   3001           00065         MOVLW   .1
+0089   0086           00066         MOVWF   PORTB   ; RB0 as Input for Stop Button
+008A   0089           00067         MOVWF   PORTE   ; RE0 as Input for Operation Mode Switch
+                      00068         
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0089   0187           00065         CLRF    TRISC   ; PORTC as Output
+008B   0187           00069         CLRF    TRISC   ; PORTC as Output
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-008A   0188           00066         CLRF    TRISD   ; PORTD as Output
-                      00067                                         
+008C   0188           00070         CLRF    TRISD   ; PORTD as Output
+                      00071                                         
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-008B   1781           00068         BSF     OPTION_REG,7            ; Disables Internal Portb Pullups
-                      00069         
+008D   1781           00072         BSF     OPTION_REG,7            ; Disables Internal Portb Pullups
+                      00073         
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-008C   1701           00070         BSF     OPTION_REG,INTEDG       ; Enables RB0 to interrupt on rising
-                      00071                                         ; edge
-                      00072 ;       BCF     OPTION_REG,INTEDG       ; Enables RB0 to interrupt on falling
-                      00073                                         ; edge
-                      00074                                         
-                      00075 ;       BCF     OPTION_REG,RBPU         ; Enables Internal Portb Pullups
-                      00076         
-008D   1283 1303      00077         BANKSEL PORTA   ; Return to Bank0 (Bank where PORTA reg is located)
-                      00078         
-                      00079         ;;;;;;;;;;;;;;;;;;;;;;;;;;; ADC SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+008E   1701           00074         BSF     OPTION_REG,INTEDG       ; Enables RB0 to interrupt on rising
+                      00075                                         ; edge
+                      00076 ;       BCF     OPTION_REG,INTEDG       ; Enables RB0 to interrupt on falling
+                      00077                                         ; edge
+                      00078                                         
+                      00079 ;       BCF     OPTION_REG,RBPU         ; Enables Internal Portb Pullups
                       00080         
-008F   30C1           00081         MOVLW   B'11000001'
-0090   009F           00082         MOVWF   ADCON0
-                      00083         
-                      00084         ;;;;;;;;;;;;;;;;;;;;;;;;;; PORTS CLEAR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                      00085 
-0091   0187           00086         CLRF    PORTC   ; Clear Portc
-0092   0188           00087         CLRF    PORTD   ; Clear Portd
-0093   0189           00088         CLRF    PORTE   ; Clear Porte
-                      00089         
-                      00090         ;;;;;;;;;;;;;;;;;;;;;;;;;;; TMR1 SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                      00091         
-0094   3002           00092         MOVLW   .2
-0095   00A2           00093         MOVWF   TMR1_TICK
-                      00094         
-0096   3030           00095         MOVLW   B'00110000'
-0097   0090           00096         MOVWF   T1CON
-                      00097         
-0098   2???           00098         CALL    TMR1_LD
-                      00099         
-                      00100         ; TMR1 INTERRUPT SETUP
-                      00101         
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE  7
+008F   1283 1303      00081         BANKSEL PORTA   ; Return to Bank0 (Bank where PORTA reg is located)
+                      00082         
+                      00083         ;;;;;;;;;;;;;;;;;;;;;;;;;;; ADC SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00084         
+0091   30C1           00085         MOVLW   B'11000001'
+0092   009F           00086         MOVWF   ADCON0
+                      00087         
+                      00088         ;;;;;;;;;;;;;;;;;;;;;;;;;; PORTS CLEAR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00089 
+0093   0187           00090         CLRF    PORTC   ; Clear Portc
+0094   0188           00091         CLRF    PORTD   ; Clear Portd
+0095   0189           00092         CLRF    PORTE   ; Clear Porte
+                      00093         
+                      00094         ;;;;;;;;;;;;;;;;;;;;;;;;;;; TMR1 SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00095         
+0096   3002           00096         MOVLW   .2
+0097   00A2           00097         MOVWF   TMR1_TICK
+                      00098         
+0098   3030           00099         MOVLW   B'00110000'
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0099   1683 1303      00102         BANKSEL PIE1            ; Switch to bank which PIE1 is located
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-009B   140C           00103         BSF     PIE1,TMR1IE     ; TMR1 Interrupt Enable
-009C   1283 1303      00104         BANKSEL PIR1            ; Return to bank 0 where PIR1 is located
+0099   0090           00100         MOVWF   T1CON
+                      00101         
+009A   2???           00102         CALL    TMR1_LD
+                      00103         
+                      00104         ; TMR1 INTERRUPT SETUP
                       00105         
-009E   170B           00106         BSF     INTCON,PEIE     ; Peripheral Interrupt Enable (for TMR1 Enable)
-                      00107         
-                      00108         ;;;;;;;;;;;;;; STOP BUTTON AND INTERNAL INTERRUP SETUP ;;;;;;;;;;;;;;
+009B   1683 1303      00106         BANKSEL PIE1            ; Switch to bank which PIE1 is located
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+009D   140C           00107         BSF     PIE1,TMR1IE     ; TMR1 Interrupt Enable
+009E   1283 1303      00108         BANKSEL PIR1            ; Return to bank 0 where PIR1 is located
                       00109         
-009F   158B           00110         BSF     INTCON,RBIE
-00A0   178B           00111         BSF     INTCON,GIE      ; General Interrupt Enable
-                      00112         
-                      00113         ;;;;;;;;;;;;;;;;;;;;; VARIABLES INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;
-                      00114         
-00A1   3001           00115         MOVLW   OP_SING         
-00A2   00A3           00116         MOVWF   OPER_MODE       ; Single mode by default
-                      00117         
-                      00118         ;;;;;;;;;;;;;;;;;;;;;;;;;;;; END OF SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                      00119         
-00A3   2???           00120         GOTO    ITERATS
+00A0   170B           00110         BSF     INTCON,PEIE     ; Peripheral Interrupt Enable (for TMR1 Enable)
+                      00111         
+                      00112         ;;;;;;;;;;;;;; STOP BUTTON AND INTERNAL INTERRUP SETUP ;;;;;;;;;;;;;;
+                      00113         
+00A1   158B           00114         BSF     INTCON,RBIE
+00A2   178B           00115         BSF     INTCON,GIE      ; General Interrupt Enable
+                      00116         
+                      00117         ;;;;;;;;;;;;;;;;;;;;; VARIABLES INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;
+                      00118         
+00A3   3001           00119         MOVLW   OP_SING         
+00A4   00A3           00120         MOVWF   OPER_MODE       ; Single mode by default
                       00121         
-                      00122         
+                      00122         ;;;;;;;;;;;;;;;;;;;;;;;;;;;; END OF SETUP ;;;;;;;;;;;;;;;;;;;;;;;;;;;
                       00123         
-                      00124         
-                      00125 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INTERATIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+00A5   2???           00124         GOTO    ITERATS
+                      00125         
                       00126         
                       00127         
-00A4   01AA           00128 ITERATS CLRF    TOTAL_TIME
-                      00129         
-                      00130         ; Pot1 Time value read
-00A5   3000           00131         MOVLW   .0              ; Channel 0 selected
-00A6   2???           00132         CALL    ADC_GET         ; Save ADC Values
-00A7   2???           00133         CALL    VOLT_TIME_CONV  ; Volt to time conversion
-00A8   00A4           00134         MOVWF   TIME1           ; Store value on TIME1
-00A9   07AA           00135         ADDWF   TOTAL_TIME,F    ; Add time read to TOTAL_TIME
-                      00136         
-                      00137         ; Pot2 Time value read
-00AA   3001           00138         MOVLW   .1              ; Channel 1 selected
-00AB   2???           00139         CALL    ADC_GET
-00AC   2???           00140         CALL    VOLT_TIME_CONV
-00AD   00A5           00141         MOVWF   TIME2           ; Store value on TIME1
-00AE   07AA           00142         ADDWF   TOTAL_TIME,F
-                      00143         
-                      00144         ; Pot3 Time value read
-00AF   3002           00145         MOVLW   .2              ; Channel 2 selected
-00B0   2???           00146         CALL    ADC_GET
-00B1   2???           00147         CALL    VOLT_TIME_CONV
-00B2   00A6           00148         MOVWF   TIME3           ; Store value on TIME1
-00B3   07AA           00149         ADDWF   TOTAL_TIME,F
-                      00150         
-                      00151         ; Pot4 Time value read
-00B4   3004           00152         MOVLW   .4              ; Channel 4 selected
-00B5   2???           00153         CALL    ADC_GET
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE  8
+                      00128         
+                      00129 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INTERATIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00130         
+                      00131         
+00A6   01AA           00132 ITERATS CLRF    TOTAL_TIME
+                      00133         
+                      00134         ; Pot1 Time value read
+00A7   3000           00135         MOVLW   .0              ; Channel 0 selected
+00A8   2???           00136         CALL    ADC_GET         ; Save ADC Values
+00A9   2???           00137         CALL    VOLT_TIME_CONV  ; Volt to time conversion
+00AA   00A4           00138         MOVWF   TIME1           ; Store value on TIME1
+00AB   00AB           00139         MOVWF   TIME1_BK        ; Backup for later interrupt purposes
+00AC   07AA           00140         ADDWF   TOTAL_TIME,F    ; Add time read to TOTAL_TIME
+                      00141         
+                      00142         ; Pot2 Time value read
+00AD   3001           00143         MOVLW   .1              ; Channel 1 selected
+00AE   2???           00144         CALL    ADC_GET
+00AF   2???           00145         CALL    VOLT_TIME_CONV
+00B0   00A5           00146         MOVWF   TIME2           ; Store value on TIME1
+00B1   00AC           00147         MOVWF   TIME2_BK        ; Backup for later interrupt purposes
+00B2   07AA           00148         ADDWF   TOTAL_TIME,F
+                      00149         
+                      00150         ; Pot3 Time value read
+00B3   3002           00151         MOVLW   .2              ; Channel 2 selected
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00B6   2???           00154         CALL    VOLT_TIME_CONV
-00B7   00A7           00155         MOVWF   TIME4           ; Store value on TIME1
+00B4   2???           00152         CALL    ADC_GET
+00B5   2???           00153         CALL    VOLT_TIME_CONV
+00B6   00A6           00154         MOVWF   TIME3           ; Store value on TIME1
+00B7   00AD           00155         MOVWF   TIME3_BK        ; Backup for later interrupt purposes
 00B8   07AA           00156         ADDWF   TOTAL_TIME,F
                       00157         
-                      00158         
-                      00159         
-                      00160         
-                      00161         ; Checks if individual times are less than 1 seg
-00B9   3001           00162         MOVLW   .1
-00BA   0224           00163         SUBWF   TIME1,W
-00BB   1C03           00164         BTFSS   STATUS,C
-00BC   2???           00165         GOTO    ITERATS         ; Less than 0, return and check again
-00BD   3001           00166         MOVLW   .1
-00BE   0225           00167         SUBWF   TIME2,W
-00BF   1C03           00168         BTFSS   STATUS,C
-00C0   2???           00169         GOTO    ITERATS         ; Less than 0, return and check again
-00C1   3001           00170         MOVLW   .1
-00C2   0226           00171         SUBWF   TIME3,W
-00C3   1C03           00172         BTFSS   STATUS,C
-00C4   2???           00173         GOTO    ITERATS         ; Less than 0, return and check again
-00C5   3001           00174         MOVLW   .1
-00C6   0227           00175         SUBWF   TIME4,W
-00C7   1C03           00176         BTFSS   STATUS,C
-00C8   2???           00177         GOTO    ITERATS         ; Less than 0, return and check again
-                      00178         
-                      00179         ; Checks pass, now lets check the total time if it is in the range
-                      00180         ; of 4 to 10
-                      00181         
-00C9   300A           00182         MOVLW   .10
-00CA   022A           00183         SUBWF   TOTAL_TIME,W    ; Checks if TOTAL_TIME > 10
-00CB   1C03           00184         BTFSS   STATUS,C        ; Check status looking for the carrier
-00CC   2???           00185         GOTO    OP_SEL          ; if do, the system goes to operation mode check
-00CD   2???           00186         GOTO    ITERATS         ; else, we need to restart interations
-                      00187         
-                      00188 
-                      00189 ;;;;;;;;;;;;;;;;;;;;;;; OPERATION MODE SWITCH CHECK ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                      00190         
-                      00191 
-00CE   1C09           00192 OP_SEL  BTFSS   PORTE,0
-00CF   2801           00193         GOTO    OP_SING         ; Switch open, Single Mode selected
-00D0   2???           00194         GOTO    OP_DB1
+                      00158         ; Pot4 Time value read
+00B9   3004           00159         MOVLW   .4              ; Channel 4 selected
+00BA   2???           00160         CALL    ADC_GET
+00BB   2???           00161         CALL    VOLT_TIME_CONV
+00BC   00A7           00162         MOVWF   TIME4           ; Store value on TIME1
+00BD   00AE           00163         MOVWF   TIME4_BK        ; Backup for later interrupt purposes
+00BE   07AA           00164         ADDWF   TOTAL_TIME,F
+                      00165         
+                      00166         
+                      00167         
+                      00168         
+                      00169         ; Checks if individual times are less than 1 seg
+00BF   3001           00170         MOVLW   .1
+00C0   0224           00171         SUBWF   TIME1,W
+00C1   1C03           00172         BTFSS   STATUS,C
+00C2   2???           00173         GOTO    ITERATS         ; Less than 0, return and check again
+00C3   3001           00174         MOVLW   .1
+00C4   0225           00175         SUBWF   TIME2,W
+00C5   1C03           00176         BTFSS   STATUS,C
+00C6   2???           00177         GOTO    ITERATS         ; Less than 0, return and check again
+00C7   3001           00178         MOVLW   .1
+00C8   0226           00179         SUBWF   TIME3,W
+00C9   1C03           00180         BTFSS   STATUS,C
+00CA   2???           00181         GOTO    ITERATS         ; Less than 0, return and check again
+00CB   3001           00182         MOVLW   .1
+00CC   0227           00183         SUBWF   TIME4,W
+00CD   1C03           00184         BTFSS   STATUS,C
+00CE   2???           00185         GOTO    ITERATS         ; Less than 0, return and check again
+                      00186         
+                      00187         ; Checks pass, now lets check the total time if it is in the range
+                      00188         ; of 4 to 10
+                      00189         
+00CF   300A           00190         MOVLW   .10
+00D0   022A           00191         SUBWF   TOTAL_TIME,W    ; Checks if TOTAL_TIME > 10
+00D1   1C03           00192         BTFSS   STATUS,C        ; Check status looking for the carrier
+00D2   2???           00193         GOTO    OP_SEL          ; if do, the system goes to operation mode check
+00D3   2???           00194         GOTO    ITERATS         ; else, we need to restart interations
                       00195         
-00D1   2???           00196 OP_SING GOTO    MAIN_SG         ; Just start main single mode, there is nothing 
-                      00197                                 ; else to do
+                      00196 
+                      00197 ;;;;;;;;;;;;;;;;;;;;;;; OPERATION MODE SWITCH CHECK ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                       00198         
-                      00199 ; Checks which one is greater, TIME1 or TIME3
-00D2   0824           00200 OP_DB1  MOVFW   TIME1
-00D3   0226           00201         SUBWF   TIME3,W
-00D4   1C03           00202         BTFSS   STATUS,C
-00D5   2???           00203         GOTO    T1_WINS
-00D6   2???           00204         GOTO    T3_WINS
-                      00205         
-00D7   0824           00206 T1_WINS MOVFW   TIME1
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE  9
+                      00199 
+00D4   1C09           00200 OP_SEL  BTFSS   PORTE,0
+00D5   2???           00201         GOTO    OP_SG           ; Switch open, Single Mode selected
+00D6   2???           00202         GOTO    OP_DB1
+                      00203         
+00D7   3001           00204 OP_SG   MOVLW   .1
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00D8   00A8           00207         MOVWF   TIME1_D
-00D9   2???           00208         GOTO    OP_DB2
+00D8   00A3           00205         MOVWF   OPER_MODE
+00D9   2???           00206         CALL    DISPLAY
+00DA   2???           00207         GOTO    MAIN_SG         ; Just start main single mode, there is nothing 
+                      00208                                 ; else to do
                       00209         
-00DA   0826           00210 T3_WINS MOVFW   TIME3
-00DB   00A8           00211         MOVWF   TIME1_D
-00DC   2???           00212         GOTO    OP_DB2
-                      00213         
-                      00214 ; Checks which one is greater, TIME1 or TIME3
-                      00215         
-00DD   0825           00216 OP_DB2  MOVFW   TIME2
-00DE   0227           00217         SUBWF   TIME4,W
-00DF   1C03           00218         BTFSS   STATUS,C
-00E0   2???           00219         GOTO    T2_WINS
-00E1   2???           00220         GOTO    T4_WINS
-                      00221         
-00E2   0825           00222 T2_WINS MOVFW   TIME2
-00E3   00A9           00223         MOVWF   TIME2_D
-00E4   2???           00224         GOTO    OP_DB2
-                      00225         
-00E5   0827           00226 T4_WINS MOVFW   TIME4
-00E6   00A9           00227         MOVWF   TIME2_D
-00E7   2???           00228         GOTO    OP_DB2
-                      00229         
-00E8   2???           00230         GOTO    MAIN_DB         ; Starts Double program
-                      00231         
+                      00210 ; Checks which one is greater, TIME1 or TIME3
+00DB   0824           00211 OP_DB1  MOVFW   TIME1
+00DC   0226           00212         SUBWF   TIME3,W
+00DD   1C03           00213         BTFSS   STATUS,C
+00DE   2???           00214         GOTO    T1_WINS
+00DF   2???           00215         GOTO    T3_WINS
+                      00216         
+00E0   0824           00217 T1_WINS MOVFW   TIME1
+00E1   00A8           00218         MOVWF   TIME1_D
+00E2   2???           00219         GOTO    OP_DB2
+                      00220         
+00E3   0826           00221 T3_WINS MOVFW   TIME3
+00E4   00A8           00222         MOVWF   TIME1_D
+00E5   2???           00223         GOTO    OP_DB2
+                      00224         
+                      00225 ; Checks which one is greater, TIME1 or TIME3
+                      00226         
+00E6   0825           00227 OP_DB2  MOVFW   TIME2
+00E7   0227           00228         SUBWF   TIME4,W
+00E8   1C03           00229         BTFSS   STATUS,C
+00E9   2???           00230         GOTO    T2_WINS
+00EA   2???           00231         GOTO    T4_WINS
                       00232         
-                      00233 
-                      00234         
-                      00235 
-00E9                  00236 MAIN_SG 
-                      00237         
-                      00238         
-                      00239         
+00EB   0825           00233 T2_WINS MOVFW   TIME2
+00EC   00A9           00234         MOVWF   TIME2_D
+00ED   2???           00235         GOTO    OP_DB3
+                      00236         
+00EE   0827           00237 T4_WINS MOVFW   TIME4
+00EF   00A9           00238         MOVWF   TIME2_D
+00F0   2???           00239         GOTO    OP_DB3
                       00240         
-                      00241         
-                      00242         
-                      00243         
+00F1   3002           00241 OP_DB3  MOVLW   OP_DOUB
+00F2   00A3           00242         MOVWF   OPER_MODE
+00F3   2???           00243         CALL    DISPLAY
                       00244         
-00E9   2???           00245         GOTO    MAIN_SG
-                      00246         
+00F4   0801           00245         MOVFW   OP_SING
+00F5   2???           00246         GOTO    MAIN_DB         ; Starts Double program
                       00247         
-                      00248         
-00EA                  00249 MAIN_DB
-                      00250         
+                      00248 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00249 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SINGLE MODE PROGRAM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00250 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                       00251         
-                      00252         
+00F6                  00252 MAIN_SG 
                       00253         
                       00254         
                       00255         
                       00256         
                       00257         
-                      00258         
-00EA   2???           00259         GOTO    MAIN_DB
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE 10
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 10
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
+                      00258         
+                      00259         
                       00260         
-                      00261 
-                      00262 
-                      00263 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                      00264 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ISR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00261         
+00F6   2???           00262         GOTO    MAIN_SG
+                      00263         
+                      00264 
                       00265 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                      00266         
-00EB   00A0           00267 IRQ     MOVWF   BACKUP_W        ; w and status backup
-00EC   0803           00268         MOVFW   STATUS
-00ED   00A1           00269         MOVWF   BACKUP_STA
-                      00270         
-00EE   180C           00271         BTFSC   PIR1,TMR1IF
-00EF   2???           00272         GOTO    TMR_IRQ
+                      00266 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DOUBLE MODE PROGRAM ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00267 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00268         
+                      00269 
+00F7                  00270 MAIN_DB 
+                      00271         
+                      00272         
                       00273         
-00F0   180B           00274         BTFSC   INTCON,RBIF
-00F1   2???           00275         GOTO    STP_IRQ
-00F2   2???           00276         GOTO    RFI
+                      00274         
+                      00275         
+                      00276         
                       00277         
-00F3   3003           00278 STP_IRQ MOVLW   OP_EMER
-00F4   00A3           00279         MOVWF   OPER_MODE
-00F5   100B           00280         BCF     INTCON,RBIF
-00F6   2???           00281         GOTO    RFI
-                      00282         
-                      00283         
-00F7   0BA2           00284 TMR_IRQ DECFSZ  TMR1_TICK,F     ; Ask if tick = 2
-00F8   2???           00285         GOTO    RFI             ; If not, return from interrupt
+                      00278         
+00F7   2???           00279         GOTO    MAIN_DB
+                      00280         
+                      00281 
+                      00282 
+                      00283 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00284 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ISR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00285 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                       00286         
-00F9   3002           00287         MOVLW   .2              ; If afirmative...
-00FA   00A2           00288         MOVWF   TMR1_TICK       ; Tick Reload
-                      00289         
-00FB   30FF           00290         MOVLW   .255
-00FC   0689           00291         XORWF   PORTE,F
-00FD   2???           00292         GOTO    RFI
+00F8   00A0           00287 IRQ     MOVWF   BACKUP_W        ; w and status backup
+00F9   0803           00288         MOVFW   STATUS
+00FA   00A1           00289         MOVWF   BACKUP_STA
+                      00290         
+00FB   180C           00291         BTFSC   PIR1,TMR1IF
+00FC   2???           00292         GOTO    TMR_IRQ
                       00293         
-                      00294         
-00FE   100C           00295 RFI     BCF     PIR1,TMR1IF
-                      00296         
-00FF   0821           00297         MOVFW   BACKUP_STA      ; w and status restore
-0100   0083           00298         MOVWF   STATUS
-0101   0820           00299         MOVFW   BACKUP_W
-0102   0009           00300         RETFIE
-                      00301         
+00FD   180B           00294         BTFSC   INTCON,RBIF
+00FE   2???           00295         GOTO    STP_IRQ
+00FF   2???           00296         GOTO    RFI
+                      00297         
+                      00298 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; TMR1 INTERRUPT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00299         
+0100   0BA2           00300 TMR_IRQ DECFSZ  TMR1_TICK,F     ; Ask if tick = 2
+0101   2???           00301         GOTO    RFI             ; If not, return from interrupt
                       00302         
-3F39                  00303         END
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE 11
+0102   3002           00303         MOVLW   .2              ; If afirmative...
+0103   00A2           00304         MOVWF   TMR1_TICK       ; Tick Reload
+                      00305         
+0104   3002           00306         MOVLW   .2
+0105   0689           00307         XORWF   PORTE,F         ; Just keepalive led toggle
+                      00308         
+                      00309         
+0106   0103           00310         CLRW
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0107   06A4           00311         XORWF   TIME1,F
+0108   1D03           00312         BTFSS   STATUS,Z
+0109   2???           00313         GOTO    S1_CONT
+010A   0103           00314         CLRW
+010B   06A5           00315         XORWF   TIME2,F
+010C   1D03           00316         BTFSS   STATUS,Z
+010D   2???           00317         GOTO    S2_CONT
+010E   0103           00318         CLRW
+010F   06A6           00319         XORWF   TIME3,F
+0110   1D03           00320         BTFSS   STATUS,Z
+0111   2???           00321         GOTO    S3_CONT
+0112   0103           00322         CLRW
+0113   06A7           00323         XORWF   TIME4,F
+0114   1D03           00324         BTFSS   STATUS,Z
+0115   2???           00325         GOTO    S4_CONT
+                      00326         
+                      00327         
+0116   082B           00328         MOVFW   TIME1_BK        ; Once a cycle is completed, the values are restored
+0117   00A4           00329         MOVWF   TIME1           ; and the process restarts again
+                      00330         
+0118   082C           00331         MOVFW   TIME2_BK
+0119   00A5           00332         MOVWF   TIME2
+                      00333         
+011A   082D           00334         MOVFW   TIME3_BK
+011B   00A6           00335         MOVWF   TIME3
+                      00336         
+011C   082E           00337         MOVFW   TIME4_BK
+011D   00A7           00338         MOVWF   TIME4
+                      00339         
+                      00340         
+                      00341         
+011E   0BA4           00342         DECFSZ  TIME1,F
+011F   2???           00343         GOTO    S1_CONT         ; Single mode Traffic Light 1 control
+0120   0BA5           00344         DECFSZ  TIME2,F
+0121   2???           00345         GOTO    S2_CONT         ; Single mode Traffic Light 2 control
+0122   0BA6           00346         DECFSZ  TIME3,F
+0123   2???           00347         GOTO    S3_CONT         ; Single mode Traffic Light 3 control
+0124   0BA7           00348         DECFSZ  TIME4,F
+0125   2???           00349         GOTO    S4_CONT         ; Single mode Traffic Light 4 control
+                      00350         
+0126   03A4           00351 S1_CONT DECF    TIME1,F
+0127   3056           00352         MOVLW   B'01010110'
+0128   0087           00353         MOVWF   PORTC
+0129   2???           00354         GOTO    RFI
+                      00355         
+012A   03A5           00356 S2_CONT DECF    TIME2,F
+012B   3059           00357         MOVLW   B'01011001'
+012C   0087           00358         MOVWF   PORTC
+012D   2???           00359         GOTO    RFI
+                      00360         
+012E   03A6           00361 S3_CONT DECF    TIME3,F
+012F   3065           00362         MOVLW   B'01100101'
+0130   0087           00363         MOVWF   PORTC
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0131   2???           00364         GOTO    RFI
+                      00365         
+0132   03A7           00366 S4_CONT DECF    TIME4,F
+0133   3095           00367         MOVLW   B'10010101'
+0134   0087           00368         MOVWF   PORTC
+                      00369         
+0135   2???           00370         GOTO    RFI
+                      00371         
+                      00372 
+                      00373 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; RB0 INTERRUPT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00374         
+                      00375         
+0136   3003           00376 STP_IRQ MOVLW   OP_EMER
+0137   00A3           00377         MOVWF   OPER_MODE
+0138   100B           00378         BCF     INTCON,RBIF
+0139   2???           00379         GOTO    RFI
+                      00380         
+                      00381 
+                      00382 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; RETURN FROM INTERRUPT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      00383         
+013A   100C           00384 RFI     BCF     PIR1,TMR1IF
+                      00385         
+013B   0821           00386         MOVFW   BACKUP_STA      ; w and status restore
+013C   0083           00387         MOVWF   STATUS
+013D   0820           00388         MOVFW   BACKUP_W
+013E   0009           00389         RETFIE
+                      00390         
+                      00391         
+3F39                  00392         END
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 13
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-.1                                000000D1
 ACKDT                             00000005
 ACKEN                             00000004
 ACKSTAT                           00000006
@@ -638,13 +740,13 @@ CCPR1L                            00000015
 CCPR2                             0000001B
 CCPR2H                            0000001C
 CCPR2L                            0000001B
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE 12
+CHS0                              00000003
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 14
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-CHS0                              00000003
 CHS1                              00000004
 CHS2                              00000005
 CIS                               00000003
@@ -697,13 +799,13 @@ EEDATA                            0000010C
 EEDATH                            0000010E
 EEIE                              00000004
 EEIF                              00000004
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE 13
+EEPGD                             00000007
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 15
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-EEPGD                             00000007
 F                                 00000001
 FERR                              00000002
 FIXING_VOLT                       00000074
@@ -726,10 +828,10 @@ INTE                              00000004
 INTEDG                            00000006
 INTF                              00000001
 IRP                               00000007
-IRQ                               000000EB
-ITERATS                           000000A4
-MAIN_DB                           000000EA
-MAIN_SG                           000000E9
+IRQ                               000000F8
+ITERATS                           000000A6
+MAIN_DB                           000000F7
+MAIN_SG                           000000F6
 MID_RAN_V                         00000053
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
@@ -749,19 +851,21 @@ OBF                               00000006
 OERR                              00000001
 OPER_MODE                         00000023
 OPTION_REG                        00000081
-OP_DB1                            000000D2
-OP_DB2                            000000DD
-OP_DOUB                           .2
-OP_EMER                           .3
-OP_SEL                            000000CE
-OP_SING                           .1
-P                                 00000004
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE 14
+OP_DB1                            000000DB
+OP_DB2                            000000E6
+OP_DB3                            000000F1
+OP_DOUB                           2
+OP_EMER                           3
+OP_SEL                            000000D4
+OP_SG                             000000D7
+OP_SING                           1
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 16
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+P                                 00000004
 PCFG0                             00000000
 PCFG1                             00000001
 PCFG2                             00000002
@@ -814,13 +918,13 @@ RB2                               00000002
 RB3                               00000003
 RB4                               00000004
 RB5                               00000005
-RB6                               00000006
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE 15
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 17
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RB6                               00000006
 RB7                               00000007
 RBIE                              00000003
 RBIF                              00000000
@@ -853,7 +957,7 @@ RE0                               00000000
 RE1                               00000001
 RE2                               00000002
 READ_WRITE                        00000002
-RFI                               000000FE
+RFI                               0000013A
 RP0                               00000005
 RP1                               00000006
 RSEN                              00000001
@@ -862,24 +966,28 @@ RX9D                              00000000
 R_NOT_W                           00000002
 R_W                               00000002
 S                                 00000003
+S1_CONT                           00000126
+S2_CONT                           0000012A
+S3_CONT                           0000012E
+S4_CONT                           00000132
 SEN                               00000000
-SETUP                             0000007F
+SETUP                             00000081
 SHIFT_REG                         00000050
 SMP                               00000007
 SPBRG                             00000099
 SPEN                              00000007
 SREN                              00000005
-SSPADD                            00000093
-SSPBUF                            00000013
-SSPCON                            00000014
-SSPCON2                           00000091
-SSPEN                             00000005
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE 16
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 18
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SSPADD                            00000093
+SSPBUF                            00000013
+SSPCON                            00000014
+SSPCON2                           00000091
+SSPEN                             00000005
 SSPIE                             00000003
 SSPIF                             00000003
 SSPM0                             00000000
@@ -889,7 +997,7 @@ SSPM3                             00000003
 SSPOV                             00000006
 SSPSTAT                           00000094
 STATUS                            00000003
-STP_IRQ                           000000F3
+STP_IRQ                           00000136
 SYNC                              00000004
 T0CS                              00000005
 T0IE                              00000005
@@ -901,22 +1009,26 @@ T1CON                             00000010
 T1INSYNC                          00000002
 T1OSCEN                           00000003
 T1SYNC                            00000002
-T1_WINS                           000000D7
+T1_WINS                           000000E0
 T2CKPS0                           00000000
 T2CKPS1                           00000001
 T2CON                             00000012
-T2_WINS                           000000E2
-T3_WINS                           000000DA
-T4_WINS                           000000E5
-TABLE                             0000007B
+T2_WINS                           000000EB
+T3_WINS                           000000E3
+T4_WINS                           000000EE
+TABLE                             0000007C
 TENS                              00000056
 TIME                              00000058
 TIME1                             00000024
+TIME1_BK                          0000002B
 TIME1_D                           00000028
 TIME2                             00000025
+TIME2_BK                          0000002C
 TIME2_D                           00000029
 TIME3                             00000026
+TIME3_BK                          0000002D
 TIME4                             00000027
+TIME4_BK                          0000002E
 TMR0                              00000001
 TMR0IE                            00000005
 TMR0IF                            00000002
@@ -924,6 +1036,12 @@ TMR1                              0000000E
 TMR1CS                            00000001
 TMR1H                             0000000F
 TMR1IE                            00000000
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 19
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TMR1IF                            00000000
 TMR1L                             0000000E
 TMR1ON                            00000000
@@ -933,13 +1051,7 @@ TMR2                              00000011
 TMR2IE                            00000001
 TMR2IF                            00000001
 TMR2ON                            00000002
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE 17
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
-TMR_IRQ                           000000F7
+TMR_IRQ                           00000100
 TOTAL_TIME                        0000002A
 TOUTPS0                           00000003
 TOUTPS1                           00000004
@@ -983,6 +1095,12 @@ TRISE                             00000089
 TRISE0                            00000000
 TRISE1                            00000001
 TRISE2                            00000002
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 20
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TRMT                              00000001
 TX8_9                             00000006
 TX9                               00000006
@@ -992,12 +1110,6 @@ TXEN                              00000005
 TXIE                              00000004
 TXIF                              00000004
 TXREG                             00000019
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE 18
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TXSTA                             00000098
 UA                                00000001
 UNIT                              00000057
@@ -1042,6 +1154,12 @@ _PWRTE_ON                         00003FF7
 _RC_OSC                           00003FFF
 _WDTE_OFF                         00003FFB
 _WDTE_ON                          00003FFF
+MPASM 5.86                          MAIN.ASM   8-31-2022  0:07:52         PAGE 21
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _WDT_OFF                          00003FFB
 _WDT_ON                           00003FFF
 _WRT_1FOURTH                      00003BFF
@@ -1050,12 +1168,6 @@ _WRT_HALF                         000039FF
 _WRT_OFF                          00003FFF
 _XT_OSC                           00003FFD
 __16F877A                         00000001
-
-MPASM 5.86                          MAIN.ASM   8-30-2022  23:07:07         PAGE 19
-
-
-
-
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
