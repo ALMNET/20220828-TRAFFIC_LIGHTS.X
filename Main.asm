@@ -105,7 +105,6 @@ SETUP	NOP
 	
 	;;;;;;;;;;;;;; STOP BUTTON AND INTERNAL INTERRUP SETUP ;;;;;;;;;;;;;;
 	
-	BSF	INTCON,RBIE
 	BSF	INTCON,GIE	; General Interrupt Enable
 	
 	;;;;;;;;;;;;;;;;;;;;; VARIABLES INITIALIZATION ;;;;;;;;;;;;;;;;;;;;;;
@@ -204,6 +203,7 @@ OP_SG	MOVLW	.1
 	BSF	PIE1,TMR1IE	; TMR1 Interrupt Enable
 	BANKSEL	PIR1		; Return to bank 0 where PIR1 is located
 	
+	BSF	INTCON,INTE	; Emergency Stop Interrupt Enable
 	GOTO	MAIN_SG		; Just start main single mode, there is nothing 
 				; else to do
 	
@@ -215,10 +215,12 @@ OP_DB1	MOVFW	TIME1
 	GOTO	T3_WINS
 	
 T1_WINS	MOVFW	TIME1
+	MOVWF	TIME1_BK
 	MOVWF	TIME1_D
 	GOTO	OP_DB2
 	
 T3_WINS	MOVFW	TIME3
+	MOVWF	TIME1_BK
 	MOVWF	TIME1_D
 	GOTO	OP_DB2
 	
@@ -231,10 +233,12 @@ OP_DB2	MOVFW	TIME2
 	GOTO	T4_WINS
 	
 T2_WINS	MOVFW	TIME2
+	MOVWF	TIME2_BK
 	MOVWF	TIME2_D
 	GOTO	OP_DB3
 	
 T4_WINS	MOVFW	TIME4
+	MOVWF	TIME2_BK
 	MOVWF	TIME2_D
 	GOTO	OP_DB3
 	
@@ -247,6 +251,7 @@ OP_DB3	MOVLW	OP_DOUB
 	BSF	PIE1,TMR1IE	; TMR1 Interrupt Enable
 	BANKSEL	PIR1		; Return to bank 0 where PIR1 is located
 	
+	BSF	INTCON,INTE	; Emergency Stop Interrupt Enable
 	GOTO	MAIN_DB		; Starts Double program
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -295,23 +300,44 @@ IRQ	MOVWF	BACKUP_W	; w and status backup
 	BTFSC	PIR1,TMR1IF
 	GOTO	TMR_IRQ
 	
-	BTFSC	INTCON,RBIF
+	BTFSC	INTCON,INTF
 	GOTO	STP_IRQ
 	GOTO	RFI
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; TMR1 INTERRUPT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
-TMR_IRQ	DECFSZ	TMR1_TICK,F	; Ask if tick = 2
-	GOTO	RFI		; If not, return from interrupt
-	
-	MOVLW	.2		; If afirmative...
-	MOVWF	TMR1_TICK	; Tick Reload
+TMR_IRQ	
 	
 	MOVLW	.2
 	XORWF	PORTE,F		; Just keepalive led toggle
 	
 	
-	CLRW
+	; Operation Mode Check
+	
+	MOVLW	OP_EMER	
+	XORWF	OPER_MODE,W
+	BTFSC	STATUS,Z
+	GOTO	E_MODE
+	
+	DECFSZ	TMR1_TICK,F	; Ask if tick = 2
+	GOTO	RFI		; If not, return from interrupt
+	
+	MOVLW	.2		; If afirmative...
+	MOVWF	TMR1_TICK	; Tick Reload	
+	
+	MOVLW	OP_SING	
+	XORWF	OPER_MODE,W
+	BTFSC	STATUS,Z
+	GOTO	S_MODE
+	
+	MOVLW	OP_DOUB
+	XORWF	OPER_MODE,W
+	BTFSC	STATUS,Z
+	GOTO	D_MODE
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SINGLE MODE OPER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
+	
+S_MODE	CLRW
 	XORWF	TIME1,F
 	BTFSS	STATUS,Z
 	GOTO	S1_CONT
@@ -341,16 +367,7 @@ TMR_IRQ	DECFSZ	TMR1_TICK,F	; Ask if tick = 2
 	MOVFW	TIME4_BK
 	MOVWF	TIME4
 	
-	
-	
-	DECFSZ	TIME1,F
-	GOTO	S1_CONT		; Single mode Traffic Light 1 control
-	DECFSZ	TIME2,F
-	GOTO	S2_CONT		; Single mode Traffic Light 2 control
-	DECFSZ	TIME3,F
-	GOTO	S3_CONT		; Single mode Traffic Light 3 control
-	DECFSZ	TIME4,F
-	GOTO	S4_CONT		; Single mode Traffic Light 4 control
+	;GOTO	RFI		; Uncomment this if experiments light 4 delays
 	
 S1_CONT	DECF	TIME1,F
 	MOVLW	B'01010110'
@@ -373,13 +390,53 @@ S4_CONT	DECF	TIME4,F
 	
 	GOTO	RFI
 	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DOUBLE MODE OPER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+D_MODE	CLRW
+	XORWF	TIME1_D,F
+	BTFSS	STATUS,Z
+	GOTO	D1_CONT
+	CLRW
+	XORWF	TIME2_D,F
+	BTFSS	STATUS,Z
+	GOTO	D2_CONT
+	
+	
+	MOVFW	TIME1_BK	; Once a cycle is completed, the values are restored
+	MOVWF	TIME1_D		; and the process restarts again
+	
+	MOVFW	TIME2_BK
+	MOVWF	TIME2_D
+	
+	;GOTO	RFI		; Uncomment this if experiments light 4 delays
+	
+	
+D1_CONT	DECF	TIME1_D,F
+	MOVLW	B'01100110'
+	MOVWF	PORTC
+	GOTO	RFI
+	
+D2_CONT	DECF	TIME2_D,F
+	MOVLW	B'10011001'
+	MOVWF	PORTC
+	GOTO	RFI
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;; EMERGENCY STOP MODE OPER ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+E_MODE	MOVLW	.255
+	XORWF	PORTC,F
+	GOTO	RFI
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; RB0 INTERRUPT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	
 	
 STP_IRQ	MOVLW	OP_EMER
 	MOVWF	OPER_MODE
-	BCF	INTCON,RBIF
+	CALL	DISPLAY
+	MOVLW	B'10101010'
+	MOVWF	PORTC
+	BCF	INTCON,INTF
+	BCF	INTCON,RBIE
 	GOTO	RFI
 	
 
