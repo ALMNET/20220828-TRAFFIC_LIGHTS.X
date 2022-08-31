@@ -101,12 +101,6 @@ SETUP	NOP
 	
 	CALL	TMR1_LD
 	
-	; TMR1 INTERRUPT SETUP
-	
-	BANKSEL	PIE1		; Switch to bank which PIE1 is located
-	BSF	PIE1,TMR1IE	; TMR1 Interrupt Enable
-	BANKSEL	PIR1		; Return to bank 0 where PIR1 is located
-	
 	BSF	INTCON,PEIE	; Peripheral Interrupt Enable (for TMR1 Enable)
 	
 	;;;;;;;;;;;;;; STOP BUTTON AND INTERNAL INTERRUP SETUP ;;;;;;;;;;;;;;
@@ -204,6 +198,12 @@ OP_SEL	BTFSS	PORTE,0
 OP_SG	MOVLW	.1
 	MOVWF	OPER_MODE
 	CALL	DISPLAY
+	
+	; TMR1 Interrupt Enable
+	BANKSEL	PIE1		; Switch to bank which PIE1 is located
+	BSF	PIE1,TMR1IE	; TMR1 Interrupt Enable
+	BANKSEL	PIR1		; Return to bank 0 where PIR1 is located
+	
 	GOTO	MAIN_SG		; Just start main single mode, there is nothing 
 				; else to do
 	
@@ -242,7 +242,11 @@ OP_DB3	MOVLW	OP_DOUB
 	MOVWF	OPER_MODE
 	CALL	DISPLAY
 	
-	MOVFW	OP_SING
+	; TMR1 Interrupt Enable
+	BANKSEL	PIE1		; Switch to bank which PIE1 is located
+	BSF	PIE1,TMR1IE	; TMR1 Interrupt Enable
+	BANKSEL	PIR1		; Return to bank 0 where PIR1 is located
+	
 	GOTO	MAIN_DB		; Starts Double program
 	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
